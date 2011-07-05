@@ -1,11 +1,11 @@
-Simple 3D engine framework for MacOSX, using OpenGL.
+# Simple 3D engine framework for MacOSX, using OpenGL.
 
 Includes basic functionality, such as:
-- Loading/adding of 3D models
-- 3d model manipulation
-- Texturing
-- Input handling
-- Collision detection
+* Loading/adding of 3D models
+* 3d model manipulation
+* Texturing
+* Input handling
+* Collision detection
 
 Released under the MIT License.
 
