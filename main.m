@@ -125,7 +125,8 @@ GLvoid drawScene(GLvoid)
 	
 	// end test
 	
-    //glFlush();
+	//to flush or not to flush?
+    glFlush();
     glutSwapBuffers();
 }
 
