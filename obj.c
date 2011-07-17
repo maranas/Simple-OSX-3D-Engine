@@ -1,5 +1,5 @@
 /*
- *  obj.cpp
+ *  obj.c
  *  Simple-3d-Framework
  *
  *  Created by Moises Anthony Aranas on 7/9/11.
