@@ -7,6 +7,10 @@ Includes basic functionality, such as:
  * Texturing
  * Input handling
  * Collision detection
+ 
+Audi model created in Milkshape 3D by "Psionic" at: http://www.psionicdesign.com and http://xu1productions.com/3dstudio/index.html
+
+#
 
 Released under the MIT License.
 
