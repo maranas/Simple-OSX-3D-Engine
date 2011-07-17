@@ -58,7 +58,7 @@ GLvoid initGL(GLvoid)
 	//glMatrixMode(GL_MODELVIEW);
 	
 	// TODO: this is a test load. Remove this when Scenes are implemented
-	loadModel("cube.obj", &testModel);
+	loadModel("untitled.obj", &testModel);
 }
 
 GLvoid resizeScene(int width, int height)

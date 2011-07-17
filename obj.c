@@ -88,7 +88,7 @@ int drawModel (struct objModel *model)
 	// Draw it
 	//glDrawArrays(GL_TRIANGLES, 0, model->g_verts_count);
 	
-	glDrawElements(GL_QUADS, 4 * model->f_count, GL_UNSIGNED_BYTE, model->f_indices);
+	glDrawElements(GL_TRIANGLES, 3 * model->f_count, GL_UNSIGNED_INT, model->f_indices);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	return 1;
 }

@@ -21,7 +21,7 @@ struct objModel {
 	int f_count;
 	
 	GLfloat g_verts[MAX_VERTICES * COORDS_PER_VERTEX];
-	GLubyte f_indices[MAX_VERTICES * COORDS_PER_VERTEX];
+	GLuint f_indices[MAX_VERTICES * COORDS_PER_VERTEX];
 };
 
 // loads a model off a .obj file into an objModel struct
