@@ -18,14 +18,20 @@
 /* Model structure */
 struct objModel {
 	int g_verts_count;
+	int t_verts_count;
+	int n_verts_count;
 	int f_count;
 	
+	GLuint texture;
+	
 	GLfloat g_verts[MAX_VERTICES * COORDS_PER_VERTEX];
-	GLuint f_indices[MAX_VERTICES * COORDS_PER_VERTEX];
+	GLfloat t_verts[MAX_VERTICES * COORDS_PER_VERTEX];
+	GLfloat n_verts[MAX_VERTICES * COORDS_PER_VERTEX];
+	GLuint f_indices[MAX_VERTICES * COORDS_PER_VERTEX]; 
 };
 
 // loads a model off a .obj file into an objModel struct
-int loadModel (const char *filename, struct objModel *model);
+int loadModel (const char *filename, struct objModel *model, const char *tex_file, int width, int height);
 
 // draws a model
 int drawModel (struct objModel *model);

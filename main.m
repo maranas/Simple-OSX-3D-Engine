@@ -58,7 +58,7 @@ GLvoid initGL(GLvoid)
 	//glMatrixMode(GL_MODELVIEW);
 	
 	// TODO: this is a test load. Remove this when Scenes are implemented
-	loadModel("untitled.obj", &testModel);
+	loadModel("untitled.obj", &testModel, "audiskin.jpg", 512, 512);
 }
 
 GLvoid resizeScene(int width, int height)
@@ -143,10 +143,6 @@ GLvoid drawScene(GLvoid)
 	// test scene (a shiny teapot); replace.
 	glLoadIdentity();
 	lightScene();
-	GLfloat specularity[] = {0.5, 0.5, 0.5};
-	GLfloat shine[] = {128};
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularity);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, shine);
 	glTranslatef(0.0f, -0.5f, -6.0f);
 	glRotatef(rquad, 1.0f, 0.0f, 0.0f);
 	glRotatef(rquad2, 0.0f, 1.0f, 0.0f);

@@ -9,7 +9,7 @@
 
 #include "obj.h"
 
-int loadModel (const char *filename, struct objModel *model)
+int loadModel (const char *filename, struct objModel *model, const char *tex_file, int width, int height)
 {
 	FILE* fp = fopen(filename, "r"); //read only
 	if (!fp)
@@ -23,6 +23,17 @@ int loadModel (const char *filename, struct objModel *model)
 	model->f_count = 0;
 	int v_c = 0;
 	int f_c = 0;
+	int t_c = 0;
+	int n_c = 0;
+	int tf_c = 0;
+	int nf_c = 0;
+	
+	// store here before arranging according to f data
+	GLfloat t_verts_temp[MAX_VERTICES * COORDS_PER_VERTEX];
+	GLfloat n_verts_temp[MAX_VERTICES * COORDS_PER_VERTEX];
+	GLuint t_indices[MAX_VERTICES * COORDS_PER_VERTEX];
+	GLuint n_indices[MAX_VERTICES * COORDS_PER_VERTEX];
+	
 	while (MAX_VERTICES * COORDS_PER_VERTEX > v_c &&
 		   MAX_VERTICES * COORDS_PER_VERTEX > f_c &&
 		   !feof(fp)) {
@@ -44,6 +55,25 @@ int loadModel (const char *filename, struct objModel *model)
 			}
 			else if (buffer[1] == 't') {
 				//texture coords
+				model->t_verts_count++;
+				char* toked = strtok(buffer, " "); // remove the vt
+				toked = strtok(NULL, " ");
+				while (toked != NULL) {
+					t_verts_temp[t_c] = atof(toked);
+					toked = strtok(NULL, " ");
+					t_c++;
+				}
+			}
+			else if (buffer[1] == 'n') {
+				//normal coords
+				model->n_verts_count++;
+				char* toked = strtok(buffer, " "); // remove the vt
+				toked = strtok(NULL, " ");
+				while (toked != NULL) {
+					n_verts_temp[n_c] = atof(toked);
+					toked = strtok(NULL, " ");
+					n_c++;
+				}
 			}
 		}
 		else if (buffer[0] == 'f')
@@ -53,17 +83,13 @@ int loadModel (const char *filename, struct objModel *model)
 			char* toked = strtok(buffer, " "); // remove the f
 			toked = strtok(NULL, " ");
 			while (toked != NULL) {
-				// just get the v for now. these are placeholders
-				int vt;
-				int vn;
-				
 				// v/vt/vn
-				if (sscanf(toked, "%d/%d/%d", &model->f_indices[f_c], &vt, &vn) != 3) {
+				if (sscanf(toked, "%d/%d/%d", &model->f_indices[f_c], &t_indices[tf_c], &n_indices[nf_c]) != 3) {
 					// v//n
-					if (sscanf(toked, "%d//%d", &model->f_indices[f_c], &vn) !=2)
+					if (sscanf(toked, "%d//%d", &model->f_indices[f_c], &n_indices[nf_c]) !=2)
 					{
 						// v/vt
-						if (sscanf(toked, "%d/%d", &model->f_indices[f_c], &vt) !=2)
+						if (sscanf(toked, "%d/%d", &model->f_indices[f_c], &t_indices[tf_c]) !=2)
 						{
 							// v
 							sscanf(toked, "%d", &model->f_indices[f_c]);
@@ -71,12 +97,29 @@ int loadModel (const char *filename, struct objModel *model)
 					}
 				}
 				model->f_indices[f_c++]--;
+				t_indices[tf_c++]--;
+				n_indices[nf_c++]--;
 				toked = strtok(NULL, " ");
 			}
 		}
 	}
+	
 	printf("Faces: %d\n", model->f_count);
-	printf("Vertices: %d\n", model->g_verts_count);
+	printf("Geom vertices: %d\n", model->g_verts_count);
+	printf("Texture vertices: %d\n", model->t_verts_count);
+	printf("Normal vertices: %d\n", model->n_verts_count);
+	
+	// fix vt and vn according to indices
+	while (tf_c > 0 && model->t_verts_count > 0)
+	{
+		tf_c--;
+		model->t_verts[model->f_indices[tf_c]] = t_verts_temp[t_indices[tf_c]];
+	}
+	while (nf_c > 0 && model->n_verts_count > 0)
+	{
+		nf_c--;
+		model->n_verts[model->f_indices[nf_c]] = n_verts_temp[n_indices[nf_c]];
+	}
 	fclose(fp);
 	return 1;
 }
@@ -84,11 +127,23 @@ int loadModel (const char *filename, struct objModel *model)
 int drawModel (struct objModel *model)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(COORDS_PER_VERTEX, GL_FLOAT, 0, model->g_verts);
+	if  (model->n_verts_count > 0)
+	{
+		glEnableClientState(GL_NORMAL_ARRAY);
+		glNormalPointer(GL_FLOAT, 0, model->n_verts);
+	}
+	if (model->t_verts_count > 0)
+	{
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glVertexPointer(COORDS_PER_VERTEX, GL_FLOAT, 0, model->g_verts);
+	}
+	glTexCoordPointer(2, GL_FLOAT, 0, model->t_verts);
 	// Draw it
 	//glDrawArrays(GL_TRIANGLES, 0, model->g_verts_count);
-	
 	glDrawElements(GL_TRIANGLES, 3 * model->f_count, GL_UNSIGNED_INT, model->f_indices);
+	
+	if (model->t_verts_count > 0) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	if (model->n_verts_count > 0) glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	return 1;
 }
