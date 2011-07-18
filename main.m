@@ -45,12 +45,8 @@ GLvoid initGL(GLvoid)
 	glShadeModel(GL_SMOOTH);
 	glMatrixMode(GL_PROJECTION);
 	
+	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-	
-	// Enable 1 light
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_LIGHT0);
 	
 	glLoadIdentity();
 	// initial window perspective calculation
@@ -81,13 +77,7 @@ GLvoid idleFunc(GLvoid)
 // Lighting and materials
 void lightScene()
 {
-	// LIGHT0 settings
-	GLfloat light0_specular[] = {1.0, 1.0, 1.0};
-	GLfloat light0_ambient[] = {0.1, 0.1, 0.1};
-	GLfloat light0_diffuse[] = {0.5, 0.5, 0.5};
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light0_specular);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light0_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);	
+
 }
 //
 

@@ -135,9 +135,10 @@ int drawModel (struct objModel *model)
 	if (model->t_verts_count > 0)
 	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-		glVertexPointer(COORDS_PER_VERTEX, GL_FLOAT, 0, model->g_verts);
+		glTexCoordPointer(2, GL_FLOAT, 0, model->t_verts);
 	}
-	glTexCoordPointer(2, GL_FLOAT, 0, model->t_verts);
+	glVertexPointer(COORDS_PER_VERTEX, GL_FLOAT, 0, model->g_verts);
+
 	// Draw it
 	//glDrawArrays(GL_TRIANGLES, 0, model->g_verts_count);
 	glDrawElements(GL_TRIANGLES, 3 * model->f_count, GL_UNSIGNED_INT, model->f_indices);
