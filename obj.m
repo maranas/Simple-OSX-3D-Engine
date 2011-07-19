@@ -99,7 +99,7 @@ int loadModel (const char *filename, struct objModel *model, const char *tex_fil
 			else if (buffer[1] == 'n') {
 				//normal coords
 				model->n_verts_count++;
-				char* toked = strtok(buffer, " "); // remove the vt
+				char* toked = strtok(buffer, " "); // remove the vn
 				toked = strtok(NULL, " ");
 				while (toked != NULL) {
 					n_verts_temp[n_c] = atof(toked);
@@ -141,7 +141,8 @@ int loadModel (const char *filename, struct objModel *model, const char *tex_fil
 	while (c <= f_c && model->t_verts_count > 0)
 	{
 		model->t_verts[(model->f_indices[c]*2)]     = t_verts_temp[(t_indices[c]*2)];
-		model->t_verts[(model->f_indices[c]*2) + 1] = t_verts_temp[(t_indices[c]*2) + 1];
+		// Do some magic - opengl's Y origin is at the lower left.
+		model->t_verts[(model->f_indices[c]*2) + 1] = 1.0 - t_verts_temp[(t_indices[c]*2) + 1];
 		c++;
 	}
 	c = 0;
