@@ -22,7 +22,7 @@ struct objModel {
 	int n_verts_count;
 	int f_count;
 	
-	GLuint texture;
+	GLint texture;
 	
 	GLfloat g_verts[MAX_VERTICES * COORDS_PER_VERTEX];
 	GLfloat t_verts[MAX_VERTICES * COORDS_PER_VERTEX];
@@ -31,7 +31,7 @@ struct objModel {
 };
 
 // loads a model off a .obj file into an objModel struct
-int loadModel (const char *filename, struct objModel *model, const char *tex_file, int width, int height);
+int loadModel (const char *filename, struct objModel *model, const char *tex_file);
 
 // draws a model
 int drawModel (struct objModel *model);

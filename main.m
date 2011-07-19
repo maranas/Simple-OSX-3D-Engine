@@ -54,7 +54,7 @@ GLvoid initGL(GLvoid)
 	//glMatrixMode(GL_MODELVIEW);
 	
 	// TODO: this is a test load. Remove this when Scenes are implemented
-	loadModel("untitled.obj", &testModel, "audiskin.jpg", 512, 512);
+	loadModel("untitled.obj", &testModel, "audiskin.jpg");
 }
 
 GLvoid resizeScene(int width, int height)

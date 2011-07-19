@@ -7,15 +7,47 @@
  *
  */
 
+#import <Cocoa/Cocoa.h>
+#import <Carbon/Carbon.h>
+
 #include "obj.h"
 
-int loadModel (const char *filename, struct objModel *model, const char *tex_file, int width, int height)
+int loadModel (const char *filename, struct objModel *model, const char *tex_file)
 {
 	FILE* fp = fopen(filename, "r"); //read only
 	if (!fp)
 	{
 		return 0;
 	}
+	NSAutoreleasePool *autoReleasePool = [[NSAutoreleasePool alloc] init];
+	// load texture
+	NSURL* url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:tex_file]];
+	
+	CGImageSourceRef myImageSourceRef = CGImageSourceCreateWithURL((CFURLRef) url, NULL);
+	CGImageRef myImageRef = CGImageSourceCreateImageAtIndex (myImageSourceRef, 0, NULL);
+	size_t width = CGImageGetWidth(myImageRef);
+	size_t height = CGImageGetHeight(myImageRef);
+	CGRect rect = {{0, 0}, {width, height}};
+	void * myData = calloc(width * 4, height);
+	CGColorSpaceRef space = CGColorSpaceCreateDeviceRGB();
+	CGContextRef myBitmapContext = CGBitmapContextCreate (myData,
+														  width, height, 8,
+														  width*4, space,
+														  kCGBitmapByteOrder32Host |
+														  kCGImageAlphaPremultipliedFirst);
+	CGContextSetBlendMode(myBitmapContext, kCGBlendModeCopy);
+	CGContextDrawImage(myBitmapContext, rect, myImageRef);
+	CGContextRelease(myBitmapContext);
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, width);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glGenTextures(1, &model->texture);
+	glBindTexture(GL_TEXTURE_2D, model->texture);
+	glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height,
+				 0, GL_BGRA_EXT, GL_UNSIGNED_INT_8_8_8_8_REV, myData);
+	free(myData);
+	
 	
 	// load geometry
 	// TODO: Currently just loads geometric vertices.
@@ -104,29 +136,31 @@ int loadModel (const char *filename, struct objModel *model, const char *tex_fil
 		}
 	}
 	
-	printf("Faces: %d\n", model->f_count);
-	printf("Geom vertices: %d\n", model->g_verts_count);
-	printf("Texture vertices: %d\n", model->t_verts_count);
-	printf("Normal vertices: %d\n", model->n_verts_count);
-	
 	// fix vt and vn according to indices
-	while (tf_c > 0 && model->t_verts_count > 0)
+	int c = 0;
+	while (c <= f_c && model->t_verts_count > 0)
 	{
-		tf_c--;
-		model->t_verts[model->f_indices[tf_c]] = t_verts_temp[t_indices[tf_c]];
+		model->t_verts[(model->f_indices[c]*2)]     = t_verts_temp[(t_indices[c]*2)];
+		model->t_verts[(model->f_indices[c]*2) + 1] = t_verts_temp[(t_indices[c]*2) + 1];
+		c++;
 	}
-	while (nf_c > 0 && model->n_verts_count > 0)
+	c = 0;
+	while (c <= f_c && model->n_verts_count > 0)
 	{
-		nf_c--;
-		model->n_verts[model->f_indices[nf_c]] = n_verts_temp[n_indices[nf_c]];
+		model->n_verts[(model->f_indices[c]*3)]     = n_verts_temp[(n_indices[c]*3)];
+		model->n_verts[(model->f_indices[c]*3) + 1] = n_verts_temp[(n_indices[c]*3) + 1];
+		model->n_verts[(model->f_indices[c]*3) + 2] = n_verts_temp[(n_indices[c]*3) + 2];
+		c++;
 	}
 	fclose(fp);
+	[autoReleasePool release];
 	return 1;
 }
 
 int drawModel (struct objModel *model)
 {
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(COORDS_PER_VERTEX, GL_FLOAT, 0, model->g_verts);
 	if  (model->n_verts_count > 0)
 	{
 		glEnableClientState(GL_NORMAL_ARRAY);
@@ -136,8 +170,8 @@ int drawModel (struct objModel *model)
 	{
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glTexCoordPointer(2, GL_FLOAT, 0, model->t_verts);
+		glBindTexture(GL_TEXTURE_2D, model->texture);
 	}
-	glVertexPointer(COORDS_PER_VERTEX, GL_FLOAT, 0, model->g_verts);
 
 	// Draw it
 	//glDrawArrays(GL_TRIANGLES, 0, model->g_verts_count);

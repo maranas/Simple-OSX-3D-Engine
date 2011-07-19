@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
-		801FFB4513C88C54005C3286 /* obj.c in Sources */ = {isa = PBXBuildFile; fileRef = 801FFB4413C88C54005C3286 /* obj.c */; };
+		801FFB4513C88C54005C3286 /* obj.m in Sources */ = {isa = PBXBuildFile; fileRef = 801FFB4413C88C54005C3286 /* obj.m */; };
 		805F5A8813C1CD3F00B7FA79 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805F5A8713C1CD3F00B7FA79 /* GLUT.framework */; };
 		805F5A8C13C1CD5000B7FA79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805F5A8B13C1CD5000B7FA79 /* OpenGL.framework */; };
 		80BE4D7113D35BD500369E01 /* untitled.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 80BE4D6E13D35BD500369E01 /* untitled.mtl */; };
@@ -30,7 +30,7 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		801FFB4313C88C54005C3286 /* obj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = obj.h; sourceTree = "<group>"; };
-		801FFB4413C88C54005C3286 /* obj.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = obj.c; sourceTree = "<group>"; };
+		801FFB4413C88C54005C3286 /* obj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = obj.m; sourceTree = "<group>"; };
 		805F5A8713C1CD3F00B7FA79 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		805F5A8B13C1CD5000B7FA79 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		80BE4D6E13D35BD500369E01 /* untitled.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = untitled.mtl; sourceTree = "<group>"; };
@@ -60,7 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				801FFB4313C88C54005C3286 /* obj.h */,
-				801FFB4413C88C54005C3286 /* obj.c */,
+				801FFB4413C88C54005C3286 /* obj.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -205,7 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				801FFB4513C88C54005C3286 /* obj.c in Sources */,
+				801FFB4513C88C54005C3286 /* obj.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
