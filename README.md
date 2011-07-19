@@ -1,4 +1,4 @@
-## Simple 3D engine framework for MacOSX, using OpenGL.
+### Simple 3D engine framework for MacOSX, using OpenGL.
 
 Includes basic functionality, such as:
 
@@ -11,7 +11,7 @@ Includes basic functionality, such as:
 Audi model created in Milkshape 3D by "Psionic" at: [http://www.psionicdesign.com](http://www.psionicdesign.com) and [http://xu1productions.com/3dstudio/index.html](http://xu1productions.com/3dstudio/index.html)
 
 ### Screenshot
-![](http://i.imgur.com/AJDBvl.jpg "Hosted by imgur.com")
+![Screenshot should go here](http://i.imgur.com/AJDBvl.jpg "Hosted by imgur.com")
 
 Released under the MIT License.
 
