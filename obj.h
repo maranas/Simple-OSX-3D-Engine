@@ -22,7 +22,7 @@ struct objModel {
 	int n_verts_count;
 	int f_count;
 	
-	GLint texture;
+	GLuint texture;
 	
 	GLfloat g_verts[MAX_VERTICES * COORDS_PER_VERTEX];
 	GLfloat t_verts[MAX_VERTICES * COORDS_PER_VERTEX];
