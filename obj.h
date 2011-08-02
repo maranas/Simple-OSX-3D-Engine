@@ -27,7 +27,16 @@ struct objModel {
 	GLfloat g_verts[MAX_VERTICES * COORDS_PER_VERTEX];
 	GLfloat t_verts[MAX_VERTICES * COORDS_PER_VERTEX];
 	GLfloat n_verts[MAX_VERTICES * COORDS_PER_VERTEX];
-	GLuint f_indices[MAX_VERTICES * COORDS_PER_VERTEX]; 
+	GLuint f_indices[MAX_VERTICES * COORDS_PER_VERTEX];
+	
+	// bounding box
+	GLfloat min_x;
+	GLfloat min_y;
+	GLfloat min_z;
+	
+	GLfloat max_x;
+	GLfloat max_y;
+	GLfloat max_z;
 };
 
 // loads a model off a .obj file into an objModel struct

@@ -20,7 +20,8 @@ int loadModel (const char *filename, struct objModel *model, const char *tex_fil
 		return 0;
 	}
 	NSAutoreleasePool *autoReleasePool = [[NSAutoreleasePool alloc] init];
-	// load texture
+	
+	// load texture using Apple's suggested Quartz way
 	NSURL* url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:tex_file]];
 	
 	CGImageSourceRef myImageSourceRef = CGImageSourceCreateWithURL((CFURLRef) url, NULL);
@@ -47,7 +48,13 @@ int loadModel (const char *filename, struct objModel *model, const char *tex_fil
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height,
 				 0, GL_BGRA_EXT, GL_UNSIGNED_INT_8_8_8_8_REV, myData);
 	free(myData);
+	CFRelease(space);
+	CFRelease(myImageRef);
+	CFRelease(myImageSourceRef);
 	
+	// Initializa bounding box min, max values.
+	model->min_x = 0; model->min_y = 0; model->min_z = 0;
+	model->max_x = 0; model->max_y = 0; model->max_z = 0;
 	
 	// load geometry
 	// TODO: Currently just loads geometric vertices.
@@ -79,9 +86,47 @@ int loadModel (const char *filename, struct objModel *model, const char *tex_fil
 				model->g_verts_count++;
 				char* toked = strtok(buffer, " "); // remove the v
 				toked = strtok(NULL, " ");
+				int which_coord = 0;
 				while (toked != NULL) {
 					model->g_verts[v_c] = atof(toked);
 					toked = strtok(NULL, " ");
+					if (which_coord == 0) // x
+					{
+						if (v_c == 0)
+						{
+							model->min_x = model->g_verts[v_c];
+							model->max_x = model->g_verts[v_c];
+						}
+						if (model->min_x > model->g_verts[v_c])
+							model->min_x = model->g_verts[v_c];
+						else if (model->max_x < model->g_verts[v_c])
+							model->max_x = model->g_verts[v_c];
+					}
+					else if (which_coord == 1) // y
+					{
+						if (v_c == 0)
+						{
+							model->min_y = model->g_verts[v_c];
+							model->max_y = model->g_verts[v_c];
+						}
+						if (model->min_y > model->g_verts[v_c])
+							model->min_y = model->g_verts[v_c];
+						else if (model->max_y < model->g_verts[v_c])
+							model->max_y = model->g_verts[v_c];
+					}
+					else if (which_coord == 2) // z
+					{
+						if (v_c == 0)
+						{
+							model->min_z = model->g_verts[v_c];
+							model->max_z = model->g_verts[v_c];
+						}
+						if (model->min_z > model->g_verts[v_c])
+							model->min_z = model->g_verts[v_c];
+						else if (model->max_z < model->g_verts[v_c])
+							model->max_z = model->g_verts[v_c];
+					}
+					which_coord++;
 					v_c++;
 				}
 			}
@@ -181,5 +226,6 @@ int drawModel (struct objModel *model)
 	if (model->t_verts_count > 0) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	if (model->n_verts_count > 0) glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
+	
 	return 1;
 }
