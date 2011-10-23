@@ -221,7 +221,7 @@ int drawModel (struct objModel *model)
 
 	// Draw it
 	//glDrawArrays(GL_TRIANGLES, 0, model->g_verts_count);
-	glDrawElements(GL_TRIANGLES, 3 * model->f_count, GL_UNSIGNED_INT, model->f_indices);
+	glDrawElements(GL_TRIANGLES, COORDS_PER_VERTEX * model->f_count, GL_UNSIGNED_INT, model->f_indices);
 	
 	if (model->t_verts_count > 0) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	if (model->n_verts_count > 0) glDisableClientState(GL_NORMAL_ARRAY);

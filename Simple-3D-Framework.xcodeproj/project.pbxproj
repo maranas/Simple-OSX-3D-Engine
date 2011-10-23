@@ -11,11 +11,13 @@
 		801FFB4513C88C54005C3286 /* obj.m in Sources */ = {isa = PBXBuildFile; fileRef = 801FFB4413C88C54005C3286 /* obj.m */; };
 		805F5A8813C1CD3F00B7FA79 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805F5A8713C1CD3F00B7FA79 /* GLUT.framework */; };
 		805F5A8C13C1CD5000B7FA79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805F5A8B13C1CD5000B7FA79 /* OpenGL.framework */; };
-		80BE4D7113D35BD500369E01 /* untitled.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 80BE4D6E13D35BD500369E01 /* untitled.mtl */; };
-		80BE4D7213D35BD500369E01 /* untitled.obj in Resources */ = {isa = PBXBuildFile; fileRef = 80BE4D6F13D35BD500369E01 /* untitled.obj */; };
-		80BE4D7513D35BDF00369E01 /* audiskin.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 80BE4D7413D35BDF00369E01 /* audiskin.jpg */; };
-		80BE4F5213D4823000369E01 /* audiskin.bmp in Resources */ = {isa = PBXBuildFile; fileRef = 80BE4F5013D4823000369E01 /* audiskin.bmp */; };
-		80BE4F5313D4823000369E01 /* audiskin.tga in Resources */ = {isa = PBXBuildFile; fileRef = 80BE4F5113D4823000369E01 /* audiskin.tga */; };
+		808EC0CA14542025000EB081 /* quaternions.c in Sources */ = {isa = PBXBuildFile; fileRef = 808EC0C414542025000EB081 /* quaternions.c */; };
+		808EC0CB14542025000EB081 /* SPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 808EC0C714542025000EB081 /* SPlayer.m */; };
+		808EC0CC14542025000EB081 /* SScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 808EC0C914542025000EB081 /* SScene.m */; };
+		808EC0D21454203A000EB081 /* cub.png in Resources */ = {isa = PBXBuildFile; fileRef = 808EC0CE1454203A000EB081 /* cub.png */; };
+		808EC0D31454203A000EB081 /* pipercub.obj in Resources */ = {isa = PBXBuildFile; fileRef = 808EC0CF1454203A000EB081 /* pipercub.obj */; };
+		808EC0D41454203A000EB081 /* sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 808EC0D01454203A000EB081 /* sky.jpg */; };
+		808EC0D51454203A000EB081 /* skybox.obj in Resources */ = {isa = PBXBuildFile; fileRef = 808EC0D11454203A000EB081 /* skybox.obj */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -33,11 +35,16 @@
 		801FFB4413C88C54005C3286 /* obj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = obj.m; sourceTree = "<group>"; };
 		805F5A8713C1CD3F00B7FA79 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		805F5A8B13C1CD5000B7FA79 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		80BE4D6E13D35BD500369E01 /* untitled.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = untitled.mtl; sourceTree = "<group>"; };
-		80BE4D6F13D35BD500369E01 /* untitled.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = untitled.obj; sourceTree = "<group>"; };
-		80BE4D7413D35BDF00369E01 /* audiskin.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = audiskin.jpg; sourceTree = "<group>"; };
-		80BE4F5013D4823000369E01 /* audiskin.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = audiskin.bmp; sourceTree = "<group>"; };
-		80BE4F5113D4823000369E01 /* audiskin.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = audiskin.tga; sourceTree = "<group>"; };
+		808EC0C414542025000EB081 /* quaternions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternions.c; sourceTree = "<group>"; };
+		808EC0C514542025000EB081 /* quaternions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternions.h; sourceTree = "<group>"; };
+		808EC0C614542025000EB081 /* SPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPlayer.h; sourceTree = "<group>"; };
+		808EC0C714542025000EB081 /* SPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPlayer.m; sourceTree = "<group>"; };
+		808EC0C814542025000EB081 /* SScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SScene.h; sourceTree = "<group>"; };
+		808EC0C914542025000EB081 /* SScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SScene.m; sourceTree = "<group>"; };
+		808EC0CE1454203A000EB081 /* cub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cub.png; sourceTree = "<group>"; };
+		808EC0CF1454203A000EB081 /* pipercub.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pipercub.obj; sourceTree = "<group>"; };
+		808EC0D01454203A000EB081 /* sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky.jpg; sourceTree = "<group>"; };
+		808EC0D11454203A000EB081 /* skybox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.obj; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* OpenGL_base-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "OpenGL_base-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Simple-3D-Framework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple-3D-Framework.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -61,6 +68,12 @@
 			children = (
 				801FFB4313C88C54005C3286 /* obj.h */,
 				801FFB4413C88C54005C3286 /* obj.m */,
+				808EC0C414542025000EB081 /* quaternions.c */,
+				808EC0C514542025000EB081 /* quaternions.h */,
+				808EC0C614542025000EB081 /* SPlayer.h */,
+				808EC0C714542025000EB081 /* SPlayer.m */,
+				808EC0C814542025000EB081 /* SScene.h */,
+				808EC0C914542025000EB081 /* SScene.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -116,12 +129,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				808EC0CE1454203A000EB081 /* cub.png */,
+				808EC0CF1454203A000EB081 /* pipercub.obj */,
+				808EC0D01454203A000EB081 /* sky.jpg */,
+				808EC0D11454203A000EB081 /* skybox.obj */,
 				8D1107310486CEB800E47090 /* OpenGL_base-Info.plist */,
-				80BE4D7413D35BDF00369E01 /* audiskin.jpg */,
-				80BE4F5013D4823000369E01 /* audiskin.bmp */,
-				80BE4F5113D4823000369E01 /* audiskin.tga */,
-				80BE4D6E13D35BD500369E01 /* untitled.mtl */,
-				80BE4D6F13D35BD500369E01 /* untitled.obj */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
@@ -163,7 +175,7 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Simple-3d-Framework" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Simple-3D-Framework" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -189,11 +201,10 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
-				80BE4D7113D35BD500369E01 /* untitled.mtl in Resources */,
-				80BE4D7213D35BD500369E01 /* untitled.obj in Resources */,
-				80BE4D7513D35BDF00369E01 /* audiskin.jpg in Resources */,
-				80BE4F5213D4823000369E01 /* audiskin.bmp in Resources */,
-				80BE4F5313D4823000369E01 /* audiskin.tga in Resources */,
+				808EC0D21454203A000EB081 /* cub.png in Resources */,
+				808EC0D31454203A000EB081 /* pipercub.obj in Resources */,
+				808EC0D41454203A000EB081 /* sky.jpg in Resources */,
+				808EC0D51454203A000EB081 /* skybox.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +217,9 @@
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				801FFB4513C88C54005C3286 /* obj.m in Sources */,
+				808EC0CA14542025000EB081 /* quaternions.c in Sources */,
+				808EC0CB14542025000EB081 /* SPlayer.m in Sources */,
+				808EC0CC14542025000EB081 /* SScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +314,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Simple-3d-Framework" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Simple-3D-Framework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
