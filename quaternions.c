@@ -58,9 +58,9 @@ void axisAngleFromQuat( struct quaternion *Q, struct axisAngle *A )
 	}	
 }
 
-void quatToEuler(struct quaternion *Q, GLfloat a, GLfloat b, GLfloat c)
+void quatToEuler(struct quaternion *Q, GLfloat *a, GLfloat *b, GLfloat *c)
 {
-	a = atan2(2 * Q->x * Q->w-2 * Q->y * Q->z, 1 - 2 * Q->x * Q->x - 2 * Q->z * Q->z);	
-	b = atan2(2 * Q->y * Q->w-2 * Q->x * Q->z, 1 - 2 * Q->y * Q->y - 2 * Q->z * Q->z);
-	c = asin(2 * Q->x * Q->y + 2 * Q->z * Q->w);
+	(*a) = DEGREES(atan2(2 * Q->x * Q->w-2 * Q->y * Q->z, 1 - 2 * Q->x * Q->x - 2 * Q->z * Q->z));
+	(*b) = DEGREES(atan2(2 * Q->y * Q->w-2 * Q->x * Q->z, 1 - 2 * Q->y * Q->y - 2 * Q->z * Q->z));
+	(*c) = DEGREES(asin(2 * Q->x * Q->y + 2 * Q->z * Q->w));
 }

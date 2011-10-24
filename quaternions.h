@@ -31,4 +31,4 @@ void quatFromEuler( GLfloat a, GLfloat b, GLfloat c, struct quaternion *Q );
 
 void axisAngleFromQuat( struct quaternion *Q, struct axisAngle *A );
 
-void quatToEuler(struct quaternion *Q, GLfloat a, GLfloat b, GLfloat c);
+void quatToEuler(struct quaternion *Q, GLfloat *a, GLfloat *b, GLfloat *c);

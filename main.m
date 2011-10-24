@@ -34,9 +34,9 @@ GLfloat yaw;
 GLfloat roll;
 GLfloat throttle;
 GLfloat x, y, z;
-GLfloat cam_roll;
-GLfloat cam_pitch;
-GLfloat cam_yaw;
+GLfloat global_roll;
+GLfloat global_pitch;
+GLfloat global_yaw;
 struct quaternion Qtot;
 //end test
 
@@ -69,7 +69,7 @@ GLvoid initGL(GLvoid)
 	// TEST VALUES
 	// Load our cub
 	throttle = 0; x = 0; y = 0; z = -10; roll = 0; pitch = 0; yaw = 0;
-	cam_pitch = 0; cam_yaw = 0; cam_roll = 0;
+	global_pitch = 0; global_yaw = 0; global_roll = 0;
 	Qtot.w = 1; Qtot.x = 0; Qtot.y = 0; Qtot.z = 0;
 	loadModel("pipercub.obj", &testModel, "cub.png");
 	loadModel("skybox.obj", &testModel2, "sky.jpg");
@@ -201,16 +201,16 @@ void drawHud()
 	int index = 0;
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
-	sprintf(message, " x: %f", x);
+	sprintf(message, " roll: %f", global_roll);
 	index = 0;
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
-	sprintf(message, " y: %f", y);
+	sprintf(message, " pitch: %f", global_pitch);
 	index = 0;
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
 	index = 0;
-	sprintf(message, " z: %f", z);
+	sprintf(message, " yaw: %f", global_yaw);
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
 	glPopMatrix();
@@ -239,12 +239,7 @@ GLvoid drawScene(GLvoid)
 	glLoadIdentity();
 	
 	glPushMatrix();
-	// draw player object
-	float temp_pitch, temp_yaw, temp_roll;
-	quatToEuler(&Qtot, temp_pitch, temp_yaw, temp_roll);
-	x = x + (cos(temp_yaw) * (cos(temp_pitch) * throttle));
-	y = y + (sin(temp_pitch) * throttle);
-	z = z + (sin(temp_yaw) * (cos(temp_pitch) * throttle));
+	// TODO: draw player object. In the future use heading and throttle
 	glTranslatef(x, y, z);
 	
 	struct axisAngle a_conv;
