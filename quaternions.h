@@ -23,10 +23,12 @@ struct axisAngle {
 	GLfloat az;
 };
 
-// Multiplies 2 quaternions, stores result in the first argument
-void multiplyQuaternions( struct quaternion *Qa, struct quaternion *Qb);
+// Multiplies 2 quaternions, stores result in the last argument
+void multiplyQuaternions( struct quaternion *Qa, struct quaternion *Qb, struct quaternion *Qprod);
 
 // Converts Euler angles to a quaternion, then to an axis-angle.
 void quatFromEuler( GLfloat a, GLfloat b, GLfloat c, struct quaternion *Q );
 
 void axisAngleFromQuat( struct quaternion *Q, struct axisAngle *A );
+
+void quatToEuler(struct quaternion *Q, GLfloat a, GLfloat b, GLfloat c);

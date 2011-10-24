@@ -12,12 +12,12 @@
 #define RADIANS( degrees ) ( degrees * M_PI / 180 )
 #define DEGREES( radians ) ( radians * 180 / M_PI )
 
-void multiplyQuaternions( struct quaternion *Qa, struct quaternion *Qb)
+void multiplyQuaternions( struct quaternion *Qa, struct quaternion *Qb, struct quaternion *Qprod)
 {
-	Qa->w = (Qa->w*Qb->w) - (Qa->x*Qb->x) - (Qa->y*Qb->y) - (Qa->z*Qb->z);
-	Qa->x = (Qa->w*Qb->x) + (Qa->x*Qb->w) + (Qa->y*Qb->z) - (Qa->z*Qb->y);
-	Qa->y = (Qa->w*Qb->y) + (Qa->y*Qb->w) + (Qa->z*Qb->x) - (Qa->x*Qb->z);
-	Qa->z = (Qa->w*Qb->z) + (Qa->z*Qb->w) + (Qa->x*Qb->y) - (Qa->y*Qb->x);
+	Qprod->w = (Qa->w*Qb->w) - (Qa->x*Qb->x) - (Qa->y*Qb->y) - (Qa->z*Qb->z);
+	Qprod->x = (Qa->w*Qb->x) + (Qa->x*Qb->w) + (Qa->y*Qb->z) - (Qa->z*Qb->y);
+	Qprod->y = (Qa->w*Qb->y) + (Qa->y*Qb->w) + (Qa->z*Qb->x) - (Qa->x*Qb->z);
+	Qprod->z = (Qa->w*Qb->z) + (Qa->z*Qb->w) + (Qa->x*Qb->y) - (Qa->y*Qb->x);
 }
 
 void quatFromEuler( GLfloat a, GLfloat b, GLfloat c, struct quaternion *Q )
@@ -56,4 +56,11 @@ void axisAngleFromQuat( struct quaternion *Q, struct axisAngle *A )
 		A->ay = Q->y / scale;
 		A->az = Q->z / scale;
 	}	
+}
+
+void quatToEuler(struct quaternion *Q, GLfloat a, GLfloat b, GLfloat c)
+{
+	a = atan2(2 * Q->x * Q->w-2 * Q->y * Q->z, 1 - 2 * Q->x * Q->x - 2 * Q->z * Q->z);	
+	b = atan2(2 * Q->y * Q->w-2 * Q->x * Q->z, 1 - 2 * Q->y * Q->y - 2 * Q->z * Q->z);
+	c = asin(2 * Q->x * Q->y + 2 * Q->z * Q->w);
 }

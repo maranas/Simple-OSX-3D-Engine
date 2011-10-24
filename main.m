@@ -37,6 +37,7 @@ GLfloat x, y, z;
 GLfloat cam_roll;
 GLfloat cam_pitch;
 GLfloat cam_yaw;
+struct quaternion Qtot;
 //end test
 
 // Test model (TODO: implement Scenes)
@@ -69,6 +70,7 @@ GLvoid initGL(GLvoid)
 	// Load our cub
 	throttle = 0; x = 0; y = 0; z = -10; roll = 0; pitch = 0; yaw = 0;
 	cam_pitch = 0; cam_yaw = 0; cam_roll = 0;
+	Qtot.w = 1; Qtot.x = 0; Qtot.y = 0; Qtot.z = 0;
 	loadModel("pipercub.obj", &testModel, "cub.png");
 	loadModel("skybox.obj", &testModel2, "sky.jpg");
 }
@@ -199,18 +201,6 @@ void drawHud()
 	int index = 0;
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
-	sprintf(message, " Roll: %f", roll);
-	index = 0;
-	while( *( message + index++ ) != '\0' )
-		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
-	sprintf(message, " Pitch: %f", pitch);
-	index = 0;
-	while( *( message + index++ ) != '\0' )
-		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
-	sprintf(message, " Yaw: %f", yaw);
-	index = 0;
-	while( *( message + index++ ) != '\0' )
-		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
 	sprintf(message, " x: %f", x);
 	index = 0;
 	while( *( message + index++ ) != '\0' )
@@ -250,15 +240,20 @@ GLvoid drawScene(GLvoid)
 	
 	glPushMatrix();
 	// draw player object
-	x = x + (cos(yaw) * (cos(pitch) * throttle));
-	y = y + (sin(pitch) * throttle);
-	z = z + (sin(yaw) * (cos(pitch) * throttle));
+	float temp_pitch, temp_yaw, temp_roll;
+	quatToEuler(&Qtot, temp_pitch, temp_yaw, temp_roll);
+	x = x + (cos(temp_yaw) * (cos(temp_pitch) * throttle));
+	y = y + (sin(temp_pitch) * throttle);
+	z = z + (sin(temp_yaw) * (cos(temp_pitch) * throttle));
 	glTranslatef(x, y, z);
 	
 	struct axisAngle a_conv;
-	struct quaternion Qdiff;
+	struct quaternion Qdiff, QtotCopy;
 	quatFromEuler(pitch, yaw, roll, &Qdiff);
-	axisAngleFromQuat(&Qdiff, &a_conv);
+	QtotCopy = Qtot;
+	multiplyQuaternions(&QtotCopy, &Qdiff, &Qtot);
+	axisAngleFromQuat(&Qtot, &a_conv);
+	pitch = 0; yaw = 0; roll = 0; // new heading
 	
 	glRotatef(a_conv.angle, a_conv.ax, a_conv.ay, a_conv.az);
 	
