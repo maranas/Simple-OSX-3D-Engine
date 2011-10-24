@@ -20,21 +20,28 @@ void multiplyQuaternions( struct quaternion *Qa, struct quaternion *Qb)
 	Qa->z = (Qa->w*Qb->z) + (Qa->z*Qb->w) + (Qa->x*Qb->y) - (Qa->y*Qb->x);
 }
 
-void axisAngleFromEuler( GLfloat a, GLfloat b, GLfloat c, struct axisAngle *A )
+void quatFromEuler( GLfloat a, GLfloat b, GLfloat c, struct quaternion *Q )
 {
-	struct quaternion Qy, Qz, Qquot;
-	a = RADIANS(a);
-	b = RADIANS(b);
-	c = RADIANS(c);
+	a = RADIANS(a)/2;
+	b = RADIANS(b)/2;
+	c = RADIANS(c)/2;
 	
-	Qquot.w = cos(a/2); Qquot.x = sin(a/2);	Qquot.y = 0;		Qquot.z = 0;
-	Qy.w = cos(b/2);	Qy.x = 0;			Qy.y = sin(b/2);	Qy.z = 0;
-	Qz.w = cos(c/2);	Qz.x = 0;			Qz.y = 0;			Qz.z = sin(c/2);
+	float sina = sin(a);
+	float sinb = sin(b);
+	float sinc = sin(c);
+	float cosa = cos(a);
+	float cosb = cos(b);
+	float cosc = cos(c);
 	
-	multiplyQuaternions(&Qquot, &Qy);
-	multiplyQuaternions(&Qquot, &Qz);
-	
-	GLfloat scale = sqrt((Qquot.x*Qquot.x) + (Qquot.y*Qquot.y) + (Qquot.z*Qquot.z));
+	Q->w = cosb * cosc * cosa - sinb * sinc * sina;
+	Q->x = sinb * sinc * cosa + cosb * cosc * sina;
+	Q->y = sinb * cosc * cosa + cosb * sinc * sina;
+	Q->z = cosb * sinc * cosa - sinb * cosc * sina;
+}
+
+void axisAngleFromQuat( struct quaternion *Q, struct axisAngle *A )
+{
+	GLfloat scale = sqrt((Q->x*Q->x) + (Q->y*Q->y) + (Q->z*Q->z));
 	if (scale == 0)
 	{
 		A->angle = 0;
@@ -42,11 +49,11 @@ void axisAngleFromEuler( GLfloat a, GLfloat b, GLfloat c, struct axisAngle *A )
 		A->ay = 0;
 		A->az = 0;
 	}
-	else A->angle = 2 * acos(Qquot.w);
+	else A->angle = 2.0 * acos(Q->w);
 	{
 		A->angle = DEGREES(A->angle);
-		A->ax = Qquot.x / scale;
-		A->ay = Qquot.y / scale;
-		A->az = Qquot.z / scale;
-	}
+		A->ax = Q->x / scale;
+		A->ay = Q->y / scale;
+		A->az = Q->z / scale;
+	}	
 }

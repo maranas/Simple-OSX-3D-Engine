@@ -33,7 +33,10 @@ GLfloat pitch;
 GLfloat yaw;
 GLfloat roll;
 GLfloat throttle;
-GLfloat x, y , z;
+GLfloat x, y, z;
+GLfloat cam_roll;
+GLfloat cam_pitch;
+GLfloat cam_yaw;
 //end test
 
 // Test model (TODO: implement Scenes)
@@ -65,6 +68,7 @@ GLvoid initGL(GLvoid)
 	// TEST VALUES
 	// Load our cub
 	throttle = 0; x = 0; y = 0; z = -10; roll = 0; pitch = 0; yaw = 0;
+	cam_pitch = 0; cam_yaw = 0; cam_roll = 0;
 	loadModel("pipercub.obj", &testModel, "cub.png");
 	loadModel("skybox.obj", &testModel2, "sky.jpg");
 }
@@ -252,7 +256,10 @@ GLvoid drawScene(GLvoid)
 	glTranslatef(x, y, z);
 	
 	struct axisAngle a_conv;
-	axisAngleFromEuler(pitch, yaw, roll, &a_conv);
+	struct quaternion Qdiff;
+	quatFromEuler(pitch, yaw, roll, &Qdiff);
+	axisAngleFromQuat(&Qdiff, &a_conv);
+	
 	glRotatef(a_conv.angle, a_conv.ax, a_conv.ay, a_conv.az);
 	
 	drawModel(&testModel);
