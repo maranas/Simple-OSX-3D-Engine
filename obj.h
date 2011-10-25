@@ -40,7 +40,7 @@ struct objModel {
 };
 
 // loads a model off a .obj file into an objModel struct
-int loadModel (const char *filename, struct objModel *model, const char *tex_file);
+int loadModel (NSString *filename, struct objModel *model, NSString *tex_file);
 
 // draws a model
 int drawModel (struct objModel *model);

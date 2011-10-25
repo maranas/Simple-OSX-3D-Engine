@@ -12,9 +12,11 @@
 
 #include "obj.h"
 
-int loadModel (const char *filename, struct objModel *model, const char *tex_file)
+int loadModel (NSString *filename, struct objModel *model, NSString *tex_file)
 {
-	FILE* fp = fopen(filename, "r"); //read only
+	NSLog(filename);
+	NSLog(tex_file);
+	FILE* fp = fopen([filename UTF8String], "r"); //read only
 	if (!fp)
 	{
 		return 0;
@@ -22,7 +24,7 @@ int loadModel (const char *filename, struct objModel *model, const char *tex_fil
 	NSAutoreleasePool *autoReleasePool = [[NSAutoreleasePool alloc] init];
 	
 	// load texture using Apple's suggested Quartz way
-	NSURL* url = [NSURL fileURLWithPath:[NSString stringWithUTF8String:tex_file]];
+	NSURL* url = [NSURL fileURLWithPath:tex_file];
 	
 	CGImageSourceRef myImageSourceRef = CGImageSourceCreateWithURL((CFURLRef) url, NULL);
 	CGImageRef myImageRef = CGImageSourceCreateImageAtIndex (myImageSourceRef, 0, NULL);

@@ -13,8 +13,9 @@
 #include <OpenGL/glu.h>
 #include <GLUT/glut.h>
 
-#include "obj.h"
-#include "quaternions.h"
+#import "obj.h"
+#import "quaternions.h"
+#import "SObject.h"
 
 #define kWindowWidth	320
 #define kWindowHeight	200
@@ -28,21 +29,13 @@ int time_started;
 int prev_time;
 int elapsed_time;
 
-//test vars for rotation controls
-GLfloat pitch;
-GLfloat yaw;
-GLfloat roll;
-GLfloat throttle;
-GLfloat x, y, z;
-GLfloat global_roll;
-GLfloat global_pitch;
-GLfloat global_yaw;
-struct quaternion Qtot;
-//end test
 
 // Test model (TODO: implement Scenes)
-struct objModel testModel;
-struct objModel testModel2;
+SObject *testModel;
+SObject *testModel2;
+
+// other test vars
+GLfloat throttle;
 
 GLvoid initGL(GLvoid)
 {
@@ -68,11 +61,9 @@ GLvoid initGL(GLvoid)
 	
 	// TEST VALUES
 	// Load our cub
-	throttle = 0; x = 0; y = 0; z = -10; roll = 0; pitch = 0; yaw = 0;
-	global_pitch = 0; global_yaw = 0; global_roll = 0;
-	Qtot.w = 1; Qtot.x = 0; Qtot.y = 0; Qtot.z = 0;
-	loadModel("pipercub.obj", &testModel, "cub.png");
-	loadModel("skybox.obj", &testModel2, "sky.jpg");
+	throttle = 0;
+	testModel = [[[SObject alloc] initWithModel:@"pipercub.obj" withTexture:@"cub.png"] retain];
+	testModel2 = [[[SObject alloc] initWithModel:@"skybox.obj" withTexture:@"sky.jpg"] retain];
 }
 
 GLvoid resizeScene(int width, int height)
@@ -108,37 +99,49 @@ void lightScene()
 }
 //
 
+void quitApp()
+{
+	// cleanup here. use this instead of calling exit() directly
+	NSLog(@"Cleaning up");
+	
+	// release all retained objects
+	[testModel release];
+	[testModel2 release];
+	
+	exit(0);
+}
+
 void inputFunc(void)
 {
 	// Quit on ESCAPE
 	if (key_buff[KEY_ESCAPE])
-		exit(0);
+		quitApp();
 	
 	// do things with the inputs here
 	if (spec_key_buff[GLUT_KEY_DOWN] || key_buff['s'])
-		pitch += 0.15f * elapsed_time;
+		testModel.pitch += 0.15f * elapsed_time;
 	if (spec_key_buff[GLUT_KEY_UP] || key_buff['w'])
-		pitch -= 0.15f * elapsed_time;
+		testModel.pitch -= 0.15f * elapsed_time;
 	if (spec_key_buff[GLUT_KEY_LEFT] || key_buff['q'])
-		yaw -= 0.15f * elapsed_time;
+		testModel.yaw -= 0.15f * elapsed_time;
 	if (spec_key_buff[GLUT_KEY_RIGHT] || key_buff['e'])
-		yaw += 0.15f * elapsed_time;
+		testModel.yaw += 0.15f * elapsed_time;
 	if (spec_key_buff[GLUT_KEY_LEFT] || key_buff['a'])
-		roll -= 0.15f * elapsed_time;
+		testModel.roll -= 0.15f * elapsed_time;
 	if (spec_key_buff[GLUT_KEY_RIGHT] || key_buff['d'])
-		roll += 0.15f * elapsed_time;
+		testModel.roll += 0.15f * elapsed_time;
 	if (key_buff['r'])
 	{
 		throttle = 0;
-		pitch = 0; roll = 0; yaw = 0;
-		x = 0; y = 0; z = -10;
+		testModel.pitch = 0; testModel.roll = 0; testModel.yaw = 0;
+		testModel.x = 0; testModel.y = 0; testModel.z = -10;
 	}
-	if (pitch > 360) pitch -= 360;
-	if (yaw > 360) yaw -= 360;
-	if (roll > 360) roll -= 360;
-	if (pitch <= 0) pitch += 360;
-	if (yaw <= 0) yaw += 360;
-	if (roll <= 0) roll += 360;
+	if (testModel.pitch > 360) testModel.pitch -= 360;
+	if (testModel.yaw > 360) testModel.yaw -= 360;
+	if (testModel.roll > 360) testModel.roll -= 360;
+	if (testModel.pitch <= 0) testModel.pitch += 360;
+	if (testModel.yaw <= 0) testModel.yaw += 360;
+	if (testModel.roll <= 0) testModel.roll += 360;
 	
 	if (key_buff['='] || key_buff['+'])
 		throttle += 0.00001f * elapsed_time;
@@ -201,16 +204,16 @@ void drawHud()
 	int index = 0;
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
-	sprintf(message, " roll: %f", global_roll);
+	sprintf(message, " roll: %f", testModel.global_roll);
 	index = 0;
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
-	sprintf(message, " pitch: %f", global_pitch);
+	sprintf(message, " pitch: %f", testModel.global_pitch);
 	index = 0;
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
 	index = 0;
-	sprintf(message, " yaw: %f", global_yaw);
+	sprintf(message, " yaw: %f", testModel.global_yaw);
 	while( *( message + index++ ) != '\0' )
 		glutStrokeCharacter( GLUT_STROKE_ROMAN, *( message + index -1 ));
 	glPopMatrix();
@@ -239,20 +242,22 @@ GLvoid drawScene(GLvoid)
 	glLoadIdentity();
 	
 	glPushMatrix();
+	
 	// TODO: draw player object. In the future use heading and throttle
-	glTranslatef(x, y, z);
+	glTranslatef(testModel.x, testModel.y, testModel.z - 10);
+	
 	
 	struct axisAngle a_conv;
 	struct quaternion Qdiff, QtotCopy;
-	quatFromEuler(pitch, yaw, roll, &Qdiff);
-	QtotCopy = Qtot;
-	multiplyQuaternions(&QtotCopy, &Qdiff, &Qtot);
-	axisAngleFromQuat(&Qtot, &a_conv);
-	pitch = 0; yaw = 0; roll = 0; // new heading
+	quatFromEuler(testModel.pitch, testModel.yaw, testModel.roll, &Qdiff);
+	[testModel copyQtot:&QtotCopy];
+	multiplyQuaternions(&QtotCopy, &Qdiff, [testModel getQtot]);
+	axisAngleFromQuat([testModel getQtot], &a_conv);
+	testModel.pitch = 0; testModel.yaw = 0; testModel.roll = 0; // new heading
 	
 	glRotatef(a_conv.angle, a_conv.ax, a_conv.ay, a_conv.az);
 	
-	drawModel(&testModel);
+	[testModel drawModel];
 	
 	// end draw player object
 	glPopMatrix();
@@ -260,7 +265,7 @@ GLvoid drawScene(GLvoid)
 	glPushMatrix();
 	// draw scene here
 	glTranslatef(0.0f, -3.0f, 0.0f);
-	drawModel(&testModel2);
+	[testModel2 drawModel];
 	// end draw scene
 	glPopMatrix();
 	
@@ -297,5 +302,6 @@ int main(int argc, char *argv[])
 	glutSpecialUpFunc(keySpecialUpFunc);
 	
 	glutMainLoop();
+	
 	return 0;
 }

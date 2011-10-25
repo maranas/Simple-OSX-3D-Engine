@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include <GLUT/glut.h>
-#include "obj.h"
+#import "obj.h"
 
 @interface SScene : NSObject {
 	

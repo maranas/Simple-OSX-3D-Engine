@@ -12,7 +12,7 @@
 		805F5A8813C1CD3F00B7FA79 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805F5A8713C1CD3F00B7FA79 /* GLUT.framework */; };
 		805F5A8C13C1CD5000B7FA79 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 805F5A8B13C1CD5000B7FA79 /* OpenGL.framework */; };
 		808EC0CA14542025000EB081 /* quaternions.c in Sources */ = {isa = PBXBuildFile; fileRef = 808EC0C414542025000EB081 /* quaternions.c */; };
-		808EC0CB14542025000EB081 /* SPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 808EC0C714542025000EB081 /* SPlayer.m */; };
+		808EC0CB14542025000EB081 /* SObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 808EC0C714542025000EB081 /* SObject.m */; };
 		808EC0CC14542025000EB081 /* SScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 808EC0C914542025000EB081 /* SScene.m */; };
 		808EC0D21454203A000EB081 /* cub.png in Resources */ = {isa = PBXBuildFile; fileRef = 808EC0CE1454203A000EB081 /* cub.png */; };
 		808EC0D31454203A000EB081 /* pipercub.obj in Resources */ = {isa = PBXBuildFile; fileRef = 808EC0CF1454203A000EB081 /* pipercub.obj */; };
@@ -37,8 +37,8 @@
 		805F5A8B13C1CD5000B7FA79 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		808EC0C414542025000EB081 /* quaternions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternions.c; sourceTree = "<group>"; };
 		808EC0C514542025000EB081 /* quaternions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternions.h; sourceTree = "<group>"; };
-		808EC0C614542025000EB081 /* SPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPlayer.h; sourceTree = "<group>"; };
-		808EC0C714542025000EB081 /* SPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPlayer.m; sourceTree = "<group>"; };
+		808EC0C614542025000EB081 /* SObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SObject.h; sourceTree = "<group>"; };
+		808EC0C714542025000EB081 /* SObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SObject.m; sourceTree = "<group>"; };
 		808EC0C814542025000EB081 /* SScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SScene.h; sourceTree = "<group>"; };
 		808EC0C914542025000EB081 /* SScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SScene.m; sourceTree = "<group>"; };
 		808EC0CE1454203A000EB081 /* cub.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cub.png; sourceTree = "<group>"; };
@@ -70,8 +70,8 @@
 				801FFB4413C88C54005C3286 /* obj.m */,
 				808EC0C414542025000EB081 /* quaternions.c */,
 				808EC0C514542025000EB081 /* quaternions.h */,
-				808EC0C614542025000EB081 /* SPlayer.h */,
-				808EC0C714542025000EB081 /* SPlayer.m */,
+				808EC0C614542025000EB081 /* SObject.h */,
+				808EC0C714542025000EB081 /* SObject.m */,
 				808EC0C814542025000EB081 /* SScene.h */,
 				808EC0C914542025000EB081 /* SScene.m */,
 			);
@@ -218,7 +218,7 @@
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				801FFB4513C88C54005C3286 /* obj.m in Sources */,
 				808EC0CA14542025000EB081 /* quaternions.c in Sources */,
-				808EC0CB14542025000EB081 /* SPlayer.m in Sources */,
+				808EC0CB14542025000EB081 /* SObject.m in Sources */,
 				808EC0CC14542025000EB081 /* SScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

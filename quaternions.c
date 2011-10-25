@@ -55,7 +55,7 @@ void axisAngleFromQuat( struct quaternion *Q, struct axisAngle *A )
 		A->ax = Q->x / scale;
 		A->ay = Q->y / scale;
 		A->az = Q->z / scale;
-	}	
+	}
 }
 
 void quatToEuler(struct quaternion *Q, GLfloat *a, GLfloat *b, GLfloat *c)
