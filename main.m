@@ -127,9 +127,9 @@ void inputFunc(void)
 	if (spec_key_buff[GLUT_KEY_RIGHT] || key_buff['e'])
 		testModel.yaw += 0.15f * elapsed_time;
 	if (spec_key_buff[GLUT_KEY_LEFT] || key_buff['a'])
-		testModel.roll -= 0.15f * elapsed_time;
-	if (spec_key_buff[GLUT_KEY_RIGHT] || key_buff['d'])
 		testModel.roll += 0.15f * elapsed_time;
+	if (spec_key_buff[GLUT_KEY_RIGHT] || key_buff['d'])
+		testModel.roll -= 0.15f * elapsed_time;
 	if (key_buff['r'])
 	{
 		throttle = 0;
